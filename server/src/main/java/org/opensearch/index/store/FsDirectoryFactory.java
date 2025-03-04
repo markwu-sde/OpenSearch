@@ -81,7 +81,7 @@ public class FsDirectoryFactory implements IndexStorePlugin.DirectoryFactory {
         final Path location = path.resolveIndex();
         final LockFactory lockFactory = indexSettings.getValue(INDEX_LOCK_FACTOR_SETTING);
         Files.createDirectories(location);
-        return newFSDirectory(location, lockFactory, indexSettings);
+        return new OpensearchDirectory(newFSDirectory(location, lockFactory, indexSettings), path.getShardId());
     }
 
     protected Directory newFSDirectory(Path location, LockFactory lockFactory, IndexSettings indexSettings) throws IOException {
